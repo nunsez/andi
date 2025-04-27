@@ -16,5 +16,5 @@ fn main() {
 			return
 		}
 	}
-	os.system('v ./src/main.v -os $sys -o $out')
+	os.system('v ./src/main.v -os ${sys} -o ${out}')
 }
