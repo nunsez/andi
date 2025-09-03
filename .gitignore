@@ -1,26 +1,11 @@
-# Binaries for programs and plugins
-/andi
-*.exe
-*.exe~
-*.so
-*.dylib
-*.dll
+/.DS_Store/
+/.idea/
+/.vscode/
+/*.iml
 
-# Ignore binary output folders
-bin/
+/target
 
-# Ignore common editor/system specific metadata
-.DS_Store
-.idea/
-.vscode/
-*.iml
-
-# ENV
-.env
-
-# vweb and database
-*.db
-*.js
+/.env
 
 /*_animes.xml
 /*_mangas.xml
