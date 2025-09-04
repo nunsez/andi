@@ -1,4 +1,4 @@
-use crate::utils;
+use crate::utils::{self, Result};
 use quick_xml::de::from_str;
 use serde::Deserialize;
 use std::{fs, path::PathBuf};
@@ -84,7 +84,7 @@ impl From<MalAnime> for Anime {
     }
 }
 
-fn get_mal_animes(paths: &[PathBuf]) -> Result<Vec<Anime>, Box<dyn std::error::Error>> {
+fn get_mal_animes(paths: &[PathBuf]) -> Result<Vec<Anime>> {
     let path = paths
         .iter()
         .find(|path| utils::path_matches(path, |name| name.starts_with("animelist_")))
@@ -97,7 +97,7 @@ fn get_mal_animes(paths: &[PathBuf]) -> Result<Vec<Anime>, Box<dyn std::error::E
     Ok(animes)
 }
 
-fn get_shiki_animes(paths: &[PathBuf]) -> Result<Vec<Anime>, Box<dyn std::error::Error>> {
+fn get_shiki_animes(paths: &[PathBuf]) -> Result<Vec<Anime>> {
     let path = paths
         .iter()
         .find(|path| utils::path_matches(path, |name| name.ends_with("_animes.xml")))
@@ -110,7 +110,7 @@ fn get_shiki_animes(paths: &[PathBuf]) -> Result<Vec<Anime>, Box<dyn std::error:
     Ok(animes)
 }
 
-pub fn handle_anime(paths: &[PathBuf]) -> Result<(), Box<dyn std::error::Error>> {
+pub fn handle_anime(paths: &[PathBuf]) -> Result<()> {
     let shiki = get_shiki_animes(paths)?;
     let mal = get_mal_animes(paths)?;
     let diff = get_diff_anime(&mal, &shiki);

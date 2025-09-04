@@ -1,10 +1,11 @@
-use std::{io, path::PathBuf};
-
 mod anime;
 mod manga;
 mod utils;
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
+use std::{fs, io, path::PathBuf};
+use utils::Result;
+
+fn main() -> Result<()> {
     let files = get_files(".")?;
 
     if let Err(e) = anime::handle_anime(&files) {
@@ -22,8 +23,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 
-fn get_files(dir: &str) -> Result<Vec<PathBuf>, Box<dyn std::error::Error>> {
-    let files = std::fs::read_dir(dir)?;
+fn get_files(dir: &str) -> Result<Vec<PathBuf>> {
+    let files = fs::read_dir(dir)?;
 
     let mut files: Vec<PathBuf> = files
         .into_iter()

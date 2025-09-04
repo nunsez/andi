@@ -2,7 +2,9 @@ use flate2::read::GzDecoder;
 use std::io::Read;
 use std::{collections::HashMap, fs::File, path::Path};
 
-pub fn gz_to_str(path: &Path) -> Result<String, Box<dyn std::error::Error>> {
+pub type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
+
+pub fn gz_to_str(path: &Path) -> Result<String> {
     let mut content = String::new();
     let file = File::open(path)?;
     let mut dec = GzDecoder::new(file);

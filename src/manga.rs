@@ -1,7 +1,7 @@
-use std::{fs, path::PathBuf};
-
 use quick_xml::de::from_str;
 use serde::Deserialize;
+use std::{fs, path::PathBuf};
+use utils::Result;
 
 use crate::utils;
 
@@ -99,7 +99,7 @@ impl From<MalManga> for Manga {
     }
 }
 
-fn get_mal_mangas(paths: &[PathBuf]) -> Result<Vec<Manga>, Box<dyn std::error::Error>> {
+fn get_mal_mangas(paths: &[PathBuf]) -> Result<Vec<Manga>> {
     let path = paths
         .iter()
         .find(|path| utils::path_matches(path, |name| name.starts_with("mangalist_")))
@@ -112,7 +112,7 @@ fn get_mal_mangas(paths: &[PathBuf]) -> Result<Vec<Manga>, Box<dyn std::error::E
     Ok(mangas)
 }
 
-fn get_shiki_mangas(paths: &[PathBuf]) -> Result<Vec<Manga>, Box<dyn std::error::Error>> {
+fn get_shiki_mangas(paths: &[PathBuf]) -> Result<Vec<Manga>> {
     let path = paths
         .iter()
         .find(|path| utils::path_matches(path, |name| name.ends_with("_mangas.xml")))
@@ -125,7 +125,7 @@ fn get_shiki_mangas(paths: &[PathBuf]) -> Result<Vec<Manga>, Box<dyn std::error:
     Ok(mangas)
 }
 
-pub fn handle_manga(paths: &[PathBuf]) -> Result<(), Box<dyn std::error::Error>> {
+pub fn handle_manga(paths: &[PathBuf]) -> Result<()> {
     let shiki = get_shiki_mangas(paths)?;
     let mal = get_mal_mangas(paths)?;
     let diff = get_diff_manga(&mal, &shiki);
