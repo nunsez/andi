@@ -141,8 +141,9 @@ fn get_diff_manga(list1: &[Manga], list2: &[Manga]) -> Vec<Manga> {
 
     let diff1 = utils::compare(&map1, &map2);
     let diff2 = utils::compare(&map2, &map1);
+    let result = utils::uniq(&diff1, &diff2);
 
-    utils::uniq(diff1, diff2)
+    result.into_iter().cloned().collect()
 }
 
 fn print_diff(list: &[Manga]) {

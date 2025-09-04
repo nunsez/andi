@@ -32,14 +32,12 @@ pub fn compare<'a, T: PartialEq>(
     result
 }
 
-// TODO: remove Clone
-pub fn uniq<T: Clone>(diff1: HashMap<u64, &T>, diff2: HashMap<u64, &T>) -> Vec<T> {
+pub fn uniq<'a, T>(diff1: &'a HashMap<u64, &'a T>, diff2: &'a HashMap<u64, &'a T>) -> Vec<&'a T> {
     let mut result = Vec::new();
 
-    for (key, value) in diff1.into_iter() {
-        if let Some(_other) = diff2.get(&key) {
-            let item = value.clone();
-            result.push(item);
+    for (key, value) in diff1.iter() {
+        if diff2.contains_key(key) {
+            result.push(*value);
         }
     }
 
