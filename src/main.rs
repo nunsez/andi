@@ -7,8 +7,13 @@ mod utils;
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let files = get_files(".")?;
 
-    anime::handle_anime(&files)?;
-    manga::handle_manga(&files)?;
+    if let Err(e) = anime::handle_anime(&files) {
+        println!("Skip anime diff because of error: {e}");
+    }
+
+    if let Err(e) = manga::handle_manga(&files) {
+        println!("Skip manga diff because of error: {e}");
+    }
 
     println!("\nPress `Enter` to close this window.");
     let mut input = String::new();
